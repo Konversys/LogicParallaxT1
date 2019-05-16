@@ -17,8 +17,11 @@ public class Station extends RealmObject {
     private String code;
     private int stop_time;
     private long duration;
-    private StationRatio ratio;
+    private int ratio;
     private int time;
+
+    public Station() {
+    }
 
     public Station(int id, String title, String station_type_name, String code, int stop_time, long duration) {
         this.id = id;
@@ -104,11 +107,11 @@ public class Station extends RealmObject {
         this.duration = duration;
     }
 
-    public StationRatio getRatio() {
+    public int getRatio() {
         return ratio;
     }
 
-    public void setRatio(StationRatio ratio) {
+    public void setRatio(int ratio) {
         this.ratio = ratio;
     }
 

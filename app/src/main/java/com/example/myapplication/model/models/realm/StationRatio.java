@@ -1,8 +1,8 @@
 package com.example.myapplication.model.models.realm;
 
-public enum StationRatio {
-    BEHIND,
-    ARRIVAL,
-    STAY,
-    DEPARTURE,
+public class StationRatio {
+    public static final int BEHIND = 1;
+    public static final int ARRIVAL = 2;
+    public static final int STAY = 3;
+    public static final int DEPARTURE = 4;
 }

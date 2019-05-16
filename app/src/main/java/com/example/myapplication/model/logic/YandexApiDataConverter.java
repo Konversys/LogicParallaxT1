@@ -4,14 +4,14 @@ import com.example.myapplication.model.models.realm.Station;
 import com.example.myapplication.model.models.yandex_api.station.StationList;
 import com.example.myapplication.model.models.yandex_api.station.Stop;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+
+import io.realm.RealmList;
 
 public class YandexApiDataConverter {
-    static ArrayList<Station> StationYandexToStationRealm(StationList stationList) {
-        ArrayList<Station> stations = new ArrayList<>();
+    public static RealmList<Station> StationYandexToStationRealm(StationList stationList) {
+        RealmList<Station> stations = new RealmList<>();
         int count = 0;
         //2019-05-19 11:13:00
         String date_pattern = "yyyy-MM-dd HH:mm:ss";

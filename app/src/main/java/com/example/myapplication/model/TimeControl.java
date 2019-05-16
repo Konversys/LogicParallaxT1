@@ -38,14 +38,14 @@ public class TimeControl {
                 CurrentStation currentPosition = getCurrentStation(stations);
                 if (currentPosition == null)
                     return;
-                if (currentPosition.getPosition() == CurrentPosition.BetweenStations) {
-                    stations.where().lessThan("id", currentPosition.getStation()).findAll().setInt("ratio", StationRatio.ARRIVAL.ordinal());
-                    stations.where().greaterThanOrEqualTo("id", currentPosition.getStation()).findAll().setInt("ratio", StationRatio.BEHIND.ordinal());
+                if (currentPosition.getPosition() == CurrentPosition.BETWEEN_STATIONS) {
+                    stations.where().lessThan("id", currentPosition.getStation()).findAll().setInt("ratio", StationRatio.ARRIVAL);
+                    stations.where().greaterThanOrEqualTo("id", currentPosition.getStation()).findAll().setInt("ratio", StationRatio.BEHIND);
                 }
                 else{
-                    stations.where().lessThan("id", currentPosition.getStation()).findAll().setInt("ratio", StationRatio.ARRIVAL.ordinal());
-                    stations.where().greaterThan("id", currentPosition.getStation()).findAll().setInt("ratio", StationRatio.BEHIND.ordinal());
-                    stations.where().equalTo("id", currentPosition.getStation()).findAll().setInt("ratio", StationRatio.STAY.ordinal());
+                    stations.where().lessThan("id", currentPosition.getStation()).findAll().setInt("ratio", StationRatio.ARRIVAL);
+                    stations.where().greaterThan("id", currentPosition.getStation()).findAll().setInt("ratio", StationRatio.BEHIND);
+                    stations.where().equalTo("id", currentPosition.getStation()).findAll().setInt("ratio", StationRatio.STAY);
                 }
             });
         }
@@ -66,11 +66,11 @@ public class TimeControl {
         Date now = new Date();
         if (stations.get(0).getDeparture().before(now)) {
             mid = 0;
-            return new CurrentStation(mid, CurrentPosition.BeforeStart);
+            return new CurrentStation(mid, CurrentPosition.BEFORE_START);
         }
         else if (stations.get(stations.size()-1).getArrival().after(now)) {
             mid = stations.size() - 1;
-            return new CurrentStation(mid, CurrentPosition.AfterEnd);
+            return new CurrentStation(mid, CurrentPosition.AFTER_END);
         }
         else {
             while (!(left >= right)) {
@@ -80,12 +80,12 @@ public class TimeControl {
                         stations.get(mid).getDeparture() != null &&
                         stations.get(mid).getArrival().after(now) &&
                         stations.get(mid).getDeparture().before(now)) {
-                    return new CurrentStation(mid, CurrentPosition.Stay);
+                    return new CurrentStation(mid, CurrentPosition.STAY);
                 } else if (stations.get(mid).getDeparture() != null &&
                         stations.get(mid + 1).getArrival() != null &&
                         stations.get(mid).getDeparture().after(now) &&
                         stations.get(mid + 1).getArrival().before(now)) {
-                    return new CurrentStation(mid, CurrentPosition.BetweenStations);
+                    return new CurrentStation(mid, CurrentPosition.BETWEEN_STATIONS);
                 }
 
                 if (stations.get(mid).getArrival().after(now))

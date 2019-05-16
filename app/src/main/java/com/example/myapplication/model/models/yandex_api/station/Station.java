@@ -2,6 +2,8 @@ package com.example.myapplication.model.models.yandex_api.station;
 
 import com.squareup.moshi.Json;
 
+import io.realm.RealmObject;
+
 public class Station {
     @Json(name = "code")
     private String code;

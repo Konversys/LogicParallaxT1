@@ -2,9 +2,9 @@ package com.example.myapplication.model.models.realm;
 
 public class CurrentStation {
     int station;
-    CurrentPosition position;
+    int position;
 
-    public CurrentStation(int station, CurrentPosition position) {
+    public CurrentStation(int station, int position) {
         this.station = station;
         this.position = position;
     }
@@ -17,11 +17,11 @@ public class CurrentStation {
         this.station = station;
     }
 
-    public CurrentPosition getPosition() {
+    public int getPosition() {
         return position;
     }
 
-    public void setPosition(CurrentPosition position) {
+    public void setPosition(int position) {
         this.position = position;
     }
 }

@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Parallax</string>
+    <string name="rasp">Расписание </string>
 </resources>

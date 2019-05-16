@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ItemStationLytParent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="@dimen/spacing_medium"
+    android:layout_marginBottom="@dimen/spacing_medium">
+    <TextView
+        android:id="@+id/ItemStationTitleNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="#"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ItemStationNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        app:layout_constraintBaseline_toBaselineOf="@id/ItemStationTitleNumber"
+        app:layout_constraintLeft_toRightOf="@id/ItemStationTitleNumber" />
+
+    <TextView
+        android:id="@+id/ItemStationStation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="Владивосток"
+        app:layout_constraintBaseline_toBaselineOf="@id/ItemStationNumber"
+        app:layout_constraintLeft_toRightOf="@id/ItemStationNumber" />
+
+    <TextView
+        android:id="@+id/ItemStationTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/spacing_xlarge"
+        android:text="102ч 10м 59с"
+        app:layout_constraintBaseline_toBaselineOf="@id/ItemStationNumber"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ItemStationLinearTitles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="@id/ItemStationStation"
+        app:layout_constraintTop_toBottomOf="@id/ItemStationNumber">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Прибытие" />
+
+        <TextView
+            android:id="@+id/ItemStationTitleStay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Стоянка" />
+
+        <TextView
+            android:id="@+id/ItemStationTitleDeparture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Отправление" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ItemStationLinearTitles">
+
+        <TextView
+            android:id="@+id/ItemStationArrival"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="17.05.19 в 01:26" />
+
+        <TextView
+            android:id="@+id/ItemStationStay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="102 мин" />
+
+        <TextView
+            android:id="@+id/ItemStationDeparture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="17.05.19 в 02:26" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

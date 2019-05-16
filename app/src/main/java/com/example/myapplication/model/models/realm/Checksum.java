@@ -1,6 +1,6 @@
 package com.example.myapplication.model.models.realm;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -8,11 +8,9 @@ import io.realm.annotations.PrimaryKey;
 public class Checksum extends RealmObject {
     @PrimaryKey
     private String value;
-    private LocalDateTime dateTime;
+    private Date date;
 
-    public Checksum(String value, LocalDateTime dateTime) {
-        this.value = value;
-        this.dateTime = dateTime;
+    public Checksum() {
     }
 
     public String getValue() {
@@ -23,11 +21,11 @@ public class Checksum extends RealmObject {
         this.value = value;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

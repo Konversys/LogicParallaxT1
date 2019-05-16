@@ -2,7 +2,9 @@ package com.example.myapplication.model.models.yandex_api.direction;
 
 import com.squareup.moshi.Json;
 
-public class Thread {
+import io.realm.RealmObject;
+
+public class Thread extends RealmObject {
     @Json(name = "uid")
     private String uid;
     @Json(name = "title")
