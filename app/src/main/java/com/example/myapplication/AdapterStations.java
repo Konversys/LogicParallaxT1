@@ -1,25 +1,21 @@
 package com.example.myapplication;
 
 import android.content.Context;
-import android.provider.Contacts;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.myapplication.model.models.realm.Flight;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.myapplication.model.models.realm.Station;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.realm.Realm;
-
 public class AdapterStations extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Station> items = new ArrayList<>();
+    private List<Station> items;
 
     private Context ctx;
     private OnItemClickListener mOnItemClickListener;

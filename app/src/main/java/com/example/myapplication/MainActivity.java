@@ -2,9 +2,10 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.model.RealmHandler;
 import com.example.myapplication.model.logic.Tools;
@@ -15,7 +16,6 @@ import com.example.myapplication.model.models.yandex_api.direction.DirectionYand
 import com.example.myapplication.model.models.yandex_api.direction.Segment;
 import com.example.myapplication.model.models.yandex_api.direction.Thread;
 import com.example.myapplication.model.models.yandex_api.station.StationList;
-import com.example.myapplication.model.models.yandex_api.station.Stop;
 import com.example.myapplication.model.web.ApiInstanse;
 import com.example.myapplication.model.web.ApiPlxLink;
 import com.example.myapplication.model.web.ApiYandex;
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                             realm.beginTransaction();
                             realm.copyToRealm(new Flight(thread,
                                     YandexApiDataConverter.StationYandexToStationRealm(response.body()),
-                                    Tools.StrToDate(date)));
+                                    Tools.getFormattedDateWithTime(date)));
                             realm.commitTransaction();
                             realm.close();
                         } catch (ParseException e) {
