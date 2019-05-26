@@ -39,13 +39,13 @@ public class TimeControl {
                 if (currentPosition == null)
                     return;
                 if (currentPosition.getPosition() == CurrentPosition.BETWEEN_STATIONS) {
-                    stations.where().lessThan("id", currentPosition.getStation()).findAll().setInt("ratio", StationRatio.ARRIVAL);
-                    stations.where().greaterThanOrEqualTo("id", currentPosition.getStation()).findAll().setInt("ratio", StationRatio.BEHIND);
+                    stations.where().lessThan("id", currentPosition.getStation()).findAll().forEach(x -> x.setRatio(StationRatio.ARRIVAL));
+                    stations.where().greaterThanOrEqualTo("id", currentPosition.getStation()).findAll().forEach(x -> x.setRatio(StationRatio.BEHIND));
                 }
                 else{
-                    stations.where().lessThan("id", currentPosition.getStation()).findAll().setInt("ratio", StationRatio.ARRIVAL);
-                    stations.where().greaterThan("id", currentPosition.getStation()).findAll().setInt("ratio", StationRatio.BEHIND);
-                    stations.where().equalTo("id", currentPosition.getStation()).findAll().setInt("ratio", StationRatio.STAY);
+                    stations.where().lessThan("id", currentPosition.getStation()).findAll().forEach(x -> x.setRatio(StationRatio.ARRIVAL));
+                    stations.where().greaterThan("id", currentPosition.getStation()).findAll().forEach(x -> x.setRatio(StationRatio.BEHIND));
+                    stations.where().equalTo("id", currentPosition.getStation()).findAll().forEach(x -> x.setRatio(StationRatio.STAY));
                 }
             });
         }
