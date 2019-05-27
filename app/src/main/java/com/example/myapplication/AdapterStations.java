@@ -6,36 +6,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.model.RealmHandler;
+import com.example.myapplication.model.logic.Tools;
 import com.example.myapplication.model.models.realm.Station;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AdapterStations extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Station> items;
+    ArrayList<Station> stations;
 
     private Context ctx;
-    private OnItemClickListener mOnItemClickListener;
 
-    public interface OnItemClickListener {
-        void onItemClick(View view, Station obj, int position);
-    }
-
-    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
-        this.mOnItemClickListener = mItemClickListener;
-    }
-
-    public AdapterStations(Context context, List<Station> items) {
-        this.items = items;
-        ctx = context;
+    public AdapterStations(Context ctx) {
+        this.ctx = ctx;
+        this.stations = RealmHandler.GetStations();
     }
 
     public class OriginalViewHolder extends RecyclerView.ViewHolder {
         public View lyt_parent;
-
         public TextView number;
         public TextView station;
         public TextView time;
@@ -45,47 +37,43 @@ public class AdapterStations extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public OriginalViewHolder(View v) {
             super(v);
-            lyt_parent = v.findViewById(R.id.ItemStationLytParent);
-            number = v.findViewById(R.id.ItemStationNumber);
-            station = v.findViewById(R.id.ItemStationStation);
-            time = v.findViewById(R.id.ItemStationTime);
-            arrival = v.findViewById(R.id.ItemStationArrival);
-            stay = v.findViewById(R.id.ItemStationStay);
-            departure = v.findViewById(R.id.ItemStationDeparture);
+            lyt_parent = (View) v.findViewById(R.id.ItemStationLytParent);
+            number = (TextView) v.findViewById(R.id.ItemStationNumber);
+            station = (TextView) v.findViewById(R.id.ItemStationStation);
+            time = (TextView) v.findViewById(R.id.ItemStationTime);
+            arrival = (TextView) v.findViewById(R.id.ItemStationArrival);
+            stay = (TextView) v.findViewById(R.id.ItemStationStay);
+            departure = (TextView) v.findViewById(R.id.ItemStationDeparture);
         }
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh;
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_station, parent, false);
         vh = new OriginalViewHolder(v);
         return vh;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof OriginalViewHolder) {
             OriginalViewHolder view = (OriginalViewHolder) holder;
 
-            Station p = items.get(position);
-            view.number.setText(p.getId()+1);
-            view.station.setText(p.getTitle());
-            view.time.setText(Integer.toString(p.getTime()));
-            view.arrival.setText(p.getArrival().toString());
-            view.stay.setText(Double.toString(p.getDuration()/60));
-            view.departure.setText(p.getDeparture().toString());
-            view.lyt_parent.setOnClickListener(v -> {
-                if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(v, items.get(position), position);
-                }
-            });
+            Station station = stations.get(position);
+
+            view.number.setText(String.valueOf(station.getId()));
+            view.station.setText(station.getTitle());
+            view.time.setText(String.valueOf(station.getTime()));
+            view.arrival.setText(station.getArrival() == null ? "Станция отправления" : Tools.getFormattedStringWithTime(station.getArrival()));
+            view.stay.setText(station.getStop_time() / 60 + " мин");
+            view.departure.setText(station.getDeparture() == null ? "Конечная станция" : Tools.getFormattedStringWithTime(station.getDeparture()));
         }
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return stations.size();
     }
 }

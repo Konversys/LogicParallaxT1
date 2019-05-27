@@ -1,97 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.balysv.materialripple.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/ItemStationLytParent"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingVertical="@dimen/spacing_medium"
-    android:layout_marginBottom="@dimen/spacing_medium">
-    <TextView
-        android:id="@+id/ItemStationTitleNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="#"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/ItemStationNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1"
-        app:layout_constraintBaseline_toBaselineOf="@id/ItemStationTitleNumber"
-        app:layout_constraintLeft_toRightOf="@id/ItemStationTitleNumber" />
+    <androidx.constraintlayout.widget.ConstraintLayout
 
-    <TextView
-        android:id="@+id/ItemStationStation"
-        android:layout_width="wrap_content"
+        android:id="@+id/ItemStationLytParent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:text="Владивосток"
-        app:layout_constraintBaseline_toBaselineOf="@id/ItemStationNumber"
-        app:layout_constraintLeft_toRightOf="@id/ItemStationNumber" />
-
-    <TextView
-        android:id="@+id/ItemStationTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/spacing_xlarge"
-        android:text="102ч 10м 59с"
-        app:layout_constraintBaseline_toBaselineOf="@id/ItemStationNumber"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/ItemStationLinearTitles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintLeft_toLeftOf="@id/ItemStationStation"
-        app:layout_constraintTop_toBottomOf="@id/ItemStationNumber">
+        android:layout_marginBottom="@dimen/spacing_medium"
+        android:paddingVertical="@dimen/spacing_medium">
 
         <TextView
+            android:id="@+id/ItemStationTitleNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Прибытие" />
+            android:layout_marginLeft="10dp"
+            android:text="#"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/ItemStationTitleStay"
+            android:id="@+id/ItemStationNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Стоянка" />
+            app:layout_constraintBaseline_toBaselineOf="@id/ItemStationTitleNumber"
+            app:layout_constraintLeft_toRightOf="@id/ItemStationTitleNumber" />
 
         <TextView
-            android:id="@+id/ItemStationTitleDeparture"
+            android:id="@+id/ItemStationStation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Отправление" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintHorizontal_bias="0.75"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ItemStationLinearTitles">
+            android:layout_marginLeft="5dp"
+            app:layout_constraintBaseline_toBaselineOf="@id/ItemStationNumber"
+            app:layout_constraintLeft_toRightOf="@id/ItemStationNumber" />
 
         <TextView
-            android:id="@+id/ItemStationArrival"
+            android:id="@+id/ItemStationTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="17.05.19 в 01:26" />
+            android:layout_marginRight="@dimen/spacing_xlarge"
+            app:layout_constraintBaseline_toBaselineOf="@id/ItemStationNumber"
+            app:layout_constraintRight_toRightOf="parent" />
 
-        <TextView
-            android:id="@+id/ItemStationStay"
+        <LinearLayout
+            android:id="@+id/ItemStationLinearTitles"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="102 мин" />
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="@id/ItemStationStation"
+            app:layout_constraintTop_toBottomOf="@id/ItemStationNumber">
 
-        <TextView
-            android:id="@+id/ItemStationDeparture"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Прибытие" />
+
+            <TextView
+                android:id="@+id/ItemStationTitleStay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Стоянка" />
+
+            <TextView
+                android:id="@+id/ItemStationTitleDeparture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Отправление" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="17.05.19 в 02:26" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:orientation="vertical"
+            app:layout_constraintHorizontal_bias="0.75"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ItemStationLinearTitles">
+
+            <TextView
+                android:id="@+id/ItemStationArrival"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/ItemStationStay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/ItemStationDeparture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.balysv.materialripple.MaterialRippleLayout>

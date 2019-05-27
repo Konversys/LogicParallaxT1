@@ -12,7 +12,7 @@ import io.realm.RealmList;
 public class YandexApiDataConverter {
     public static ArrayList<Station> StationYandexToStationRealm(StationList stationList) {
         ArrayList<Station> stations = new ArrayList<>();
-        String date_pattern = "yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         int count = 0;
         for (Stop station : stationList.getStops()) {
             Station item = new Station(
@@ -24,13 +24,13 @@ public class YandexApiDataConverter {
                     station.getDuration());
             try {
                 if (station.getArrival() != null)
-                    item.setArrival(new SimpleDateFormat(date_pattern).parse(station.getArrival()));
+                    item.setArrival(simpleDateFormat.parse(station.getArrival()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
             try {
                 if (station.getDeparture() != null)
-                    item.setDeparture(new SimpleDateFormat(date_pattern).parse(station.getArrival()));
+                    item.setDeparture(simpleDateFormat.parse(station.getDeparture()));
             } catch (Exception e) {
                 e.printStackTrace();
             }

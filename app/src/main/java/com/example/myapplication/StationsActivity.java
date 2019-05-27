@@ -39,7 +39,7 @@ public class StationsActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         //set data and list adapter
-        mAdapter = new AdapterStations(this, RealmHandler.GetStations());
+        mAdapter = new AdapterStations(this);
         recyclerView.setAdapter(mAdapter);
     }
 }

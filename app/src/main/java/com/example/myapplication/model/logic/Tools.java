@@ -9,6 +9,10 @@ public class Tools {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
     }
 
+    public static String getFormattedStringWithTime(Date date) {
+        return new SimpleDateFormat("dd MMM yyyy HH:mm:ss").format(date);
+    }
+
     public static String getFormattedStringDateLine(Date date) {
         return new SimpleDateFormat("yyyy-MM-dd").format(date);
     }

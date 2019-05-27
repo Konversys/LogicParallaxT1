@@ -14,10 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.model.RealmHandler;
 import com.example.myapplication.model.logic.Tools;
-import com.example.myapplication.model.logic.YandexApiDataConverter;
 import com.example.myapplication.model.models.plx_link_api.Direction;
 import com.example.myapplication.model.models.realm.Flight;
-import com.example.myapplication.model.models.realm.Station;
 import com.example.myapplication.model.models.yandex_api.direction.DirectionYandex;
 import com.example.myapplication.model.models.yandex_api.direction.Segment;
 import com.example.myapplication.model.models.yandex_api.station.StationList;
