@@ -1,10 +1,9 @@
 package com.example.myapplication.model.models.realm;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Date;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 
 public class Station extends RealmObject {
@@ -23,9 +22,27 @@ public class Station extends RealmObject {
     public Station() {
     }
 
+    public Station(String title, String station_type_name, String code, int stop_time, long duration) {
+        this.title = title;
+        this.station_type_name = station_type_name;
+        this.code = code;
+        this.stop_time = stop_time;
+        this.duration = duration;
+    }
+
     public Station(int id, String title, String station_type_name, String code, int stop_time, long duration) {
         this.id = id;
         this.title = title;
+        this.station_type_name = station_type_name;
+        this.code = code;
+        this.stop_time = stop_time;
+        this.duration = duration;
+    }
+
+    public Station(String title, Date arrival, Date departure, String station_type_name, String code, int stop_time, long duration) {
+        this.title = title;
+        this.arrival = arrival;
+        this.departure = departure;
         this.station_type_name = station_type_name;
         this.code = code;
         this.stop_time = stop_time;

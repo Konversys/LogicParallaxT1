@@ -1,20 +1,16 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.model.models.realm.Flight;
+import com.example.myapplication.model.RealmHandler;
 
-import io.realm.Realm;
 
 public class StationsActivity extends AppCompatActivity {
-
-    private View parent_view;
 
     private RecyclerView recyclerView;
     private AdapterStations mAdapter;
@@ -23,9 +19,8 @@ public class StationsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stations);
-        parent_view = findViewById(android.R.id.content);
 
-        initToolbar();
+        //initToolbar();
         initComponent();
     }
 
@@ -43,10 +38,8 @@ public class StationsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        Flight flight = Realm.getDefaultInstance().where(Flight.class).findFirst();
-
         //set data and list adapter
-        mAdapter = new AdapterStations(this, flight.getStations());
+        mAdapter = new AdapterStations(this, RealmHandler.GetStations());
         recyclerView.setAdapter(mAdapter);
     }
 }

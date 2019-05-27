@@ -5,13 +5,13 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <!--android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <include layout="@layout/toolbar" />
 
-    </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.AppBarLayout-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/AcStationsStationList"

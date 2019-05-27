@@ -10,18 +10,17 @@ import java.util.ArrayList;
 import io.realm.RealmList;
 
 public class YandexApiDataConverter {
-    public static RealmList<Station> StationYandexToStationRealm(StationList stationList) {
-        RealmList<Station> stations = new RealmList<>();
-        int count = 0;
-        //2019-05-19 11:13:00
+    public static ArrayList<Station> StationYandexToStationRealm(StationList stationList) {
+        ArrayList<Station> stations = new ArrayList<>();
         String date_pattern = "yyyy-MM-dd HH:mm:ss";
+        int count = 0;
         for (Stop station : stationList.getStops()) {
             Station item = new Station(
-                    count++,
+                    ++count,
                     station.getStation().getTitle(),
                     station.getStation().getStationTypeName(),
                     station.getStation().getCode(),
-                    Integer.parseInt(station.getStopTime()),
+                    Integer.parseInt(station.getStopTime() == null ? "0" : station.getStopTime()),
                     station.getDuration());
             try {
                 if (station.getArrival() != null)

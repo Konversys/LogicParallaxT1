@@ -1,15 +1,17 @@
 package com.example.myapplication.model;
 
+import com.example.myapplication.model.logic.YandexApiDataConverter;
 import com.example.myapplication.model.models.plx_link_api.Direction;
 import com.example.myapplication.model.models.realm.Checksum;
+import com.example.myapplication.model.models.realm.Flight;
+import com.example.myapplication.model.models.realm.Station;
+import com.example.myapplication.model.models.yandex_api.station.StationList;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
-import io.realm.RealmResults;
 
 public class RealmHandler {
     public static void SaveDirections(List<Direction> directions)
@@ -83,6 +85,33 @@ public class RealmHandler {
         }
         realm.close();
         return directions;
+    }
+
+    public static ArrayList<Station> GetStations(){
+        Realm realm = Realm.getDefaultInstance();
+        ArrayList<Station> stations = new ArrayList<Station>(realm.copyFromRealm(realm.where(Station.class).findAll()));
+        realm.close();
+        return stations;
+    }
+
+    public static void SaveFlight(Flight flight, StationList stationList){
+        Realm realm = Realm.getDefaultInstance();
+        try {
+            realm.beginTransaction();
+            realm.where(Flight.class).findAll().deleteAllFromRealm();
+            realm.where(Station.class).findAll().deleteAllFromRealm();
+            realm.copyToRealm(flight);
+            realm.copyToRealm(YandexApiDataConverter.StationYandexToStationRealm(stationList));
+            realm.commitTransaction();
+            realm.close();
+        } catch (Exception e){
+            if (realm.isInTransaction()){
+                realm.cancelTransaction();
+            }
+            if (!realm.isClosed()){
+                realm.close();
+            }
+        }
     }
 
     public static Direction GetDirection(String value)
