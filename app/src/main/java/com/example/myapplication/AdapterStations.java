@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,21 +10,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.model.RealmHandler;
 import com.example.myapplication.model.logic.Tools;
 import com.example.myapplication.model.models.realm.Station;
+import com.example.myapplication.model.models.realm.StationRatio;
+
+import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AdapterStations extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    ArrayList<Station> stations;
+    private static final String BEHIND = "Пройдено";
+    private static final String STAY = "До отправки ";
+    private static final String ARRIVAL = "До прибытия ";
+
+    private ArrayList<Station> stations;
 
     private Context ctx;
 
-    public AdapterStations(Context ctx) {
+    public AdapterStations(Context ctx, ArrayList<Station> stations) {
         this.ctx = ctx;
-        this.stations = RealmHandler.GetStations();
+        this.stations = stations;
     }
 
     public class OriginalViewHolder extends RecyclerView.ViewHolder {
@@ -61,11 +69,34 @@ public class AdapterStations extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof OriginalViewHolder) {
             OriginalViewHolder view = (OriginalViewHolder) holder;
 
+            if (holder.timer != null) {
+                holder.timer.cancel();
+            }
+            holder.timer = new CountDownTimer(expiryTime, 500) {
+        ...
+            }.start();
+
             Station station = stations.get(position);
 
             view.number.setText(String.valueOf(station.getId()));
             view.station.setText(station.getTitle());
-            view.time.setText(String.valueOf(station.getTime()));
+            Date now = new Date();
+            switch (station.getRatio()) {
+                case StationRatio.BEHIND:
+                    view.time.setText(BEHIND);
+                    break;
+                case StationRatio.STAY:
+                    view.time.setText(STAY + Tools.getStringDifferenceOfStationDates(
+                            Tools.getDifferenceOfStationDates(now, station.getDeparture())));
+                    break;
+                case StationRatio.ARRIVAL:
+                    view.time.setText(ARRIVAL + Tools.getStringDifferenceOfStationDates(
+                            Tools.getDifferenceOfStationDates(now, station.getArrival())));
+                    break;
+                default:
+                    view.time.setText("Неизвестно");
+                    break;
+            }
             view.arrival.setText(station.getArrival() == null ? "Станция отправления" : Tools.getFormattedStringWithTime(station.getArrival()));
             view.stay.setText(station.getStop_time() / 60 + " мин");
             view.departure.setText(station.getDeparture() == null ? "Конечная станция" : Tools.getFormattedStringWithTime(station.getDeparture()));
@@ -75,5 +106,27 @@ public class AdapterStations extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemCount() {
         return stations.size();
+    }
+
+    class ViewHolder {
+        Station station;
+
+        public void setData(Station item) {
+            station = item;
+            tvProduct.setText(item.name);
+            updateTimeRemaining(System.currentTimeMillis());
+        }
+
+        public void updateTimeRemaining(long currentTime) {
+            long timeDiff = mProduct.expirationTime - currentTime;
+            if (timeDiff > 0) {
+                int seconds = (int) (timeDiff / 1000) % 60;
+                int minutes = (int) ((timeDiff / (1000 * 60)) % 60);
+                int hours = (int) ((timeDiff / (1000 * 60 * 60)) % 24);
+                tvTimeRemaining.setText(hours + " hrs " + minutes + " mins " + seconds + " sec");
+            } else {
+                tvTimeRemaining.setText("Expired!!");
+            }
+        }
     }
 }

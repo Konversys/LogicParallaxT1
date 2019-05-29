@@ -1,7 +1,7 @@
 package com.example.myapplication.model.web;
 
 public final class WebConsts {
-    public static final String PLX_LINK_BASE_URL = "http://176.119.156.25/api/";
+    public static final String PLX_LINK_BASE_URL = "http://konverdev.ru/api/";
     public static final String PLX_LINK_DIRECTIONS_VALID = "directions/valid";
     public static final String PLX_LINK_DIRECTIONS_ALL = "directions/all";
     public static final String PLX_LINK_CHECKSUM = "directions/checksum";

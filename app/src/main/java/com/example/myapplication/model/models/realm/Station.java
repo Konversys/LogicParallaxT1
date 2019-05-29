@@ -3,7 +3,6 @@ package com.example.myapplication.model.models.realm;
 import java.util.Date;
 
 import io.realm.RealmObject;
-import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 
 public class Station extends RealmObject {
@@ -17,7 +16,6 @@ public class Station extends RealmObject {
     private int stop_time;
     private long duration;
     private int ratio;
-    private int time;
 
     public Station() {
     }
@@ -130,13 +128,5 @@ public class Station extends RealmObject {
 
     public void setRatio(int ratio) {
         this.ratio = ratio;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
     }
 }
