@@ -42,11 +42,11 @@ public class Tools {
     public static String getStringDifferenceOfStationDates(LocalTime time){
         String result = "";
         if (time.getHourOfDay() != 0)
-            result += time.getHourOfDay() + "ч. ";
+            result += String.format("%02dч. ",time.getHourOfDay());
         if (time.getHourOfDay() != 0 && time.getMinuteOfHour() != 0)
-            result += time.getMinuteOfHour() + "м. ";
+            result += String.format("%02dм. ",time.getMinuteOfHour());
         if (time.getHourOfDay() != 0 && time.getMinuteOfHour() != 0 && time.getSecondOfMinute() != 0)
-            result += time.getSecondOfMinute() + "с.";
+            result += String.format("%02dс. ",time.getSecondOfMinute());
         return result;
     }
 }
