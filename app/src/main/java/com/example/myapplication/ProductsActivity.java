@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.SearchView;
 
+import com.example.myapplication.model.AdapterProductsRV;
 import com.example.myapplication.model.RealmHandler;
 import com.example.myapplication.model.models.plx_link_api.Product;
 import com.google.android.material.snackbar.Snackbar;
@@ -29,12 +31,11 @@ public class ProductsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
-
         productSearch = (AutoCompleteTextView) findViewById(R.id.AcProductsSearch);
-        initComponent();
+        initProductList();
     }
 
-    private void initComponent() {
+    private void initProductList() {
         productsView = (RecyclerView) findViewById(R.id.AcProductsRecycler);
         productsView.setLayoutManager(new LinearLayoutManager(this));
         productsView.setHasFixedSize(true);
@@ -48,5 +49,10 @@ public class ProductsActivity extends AppCompatActivity {
         ItemTouchHelper.Callback callback = new SwipeItemTouchHelper(mAdapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(productsView);
+        productSearch.setAdapter(new AdapterProductsRV(mAdapter));
+    }
+
+    private void initAutocompete() {
+
     }
 }

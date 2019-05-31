@@ -5,7 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,10 +17,15 @@ import com.example.myapplication.model.models.plx_link_api.Product;
 
 import java.util.ArrayList;
 
-public class AdapterProducts extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements SwipeItemTouchHelper.SwipeHelperAdapter {
+public class AdapterProducts extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements SwipeItemTouchHelper.SwipeHelperAdapter {
 
     private ArrayList<Product> items = new ArrayList<>();
-    private ArrayList<Product> items_swiped = new ArrayList<>();
+    public ArrayList<Product> items_swiped = new ArrayList<>();
+
+    public void setItems_swiped(ArrayList<Product> items_swiped) {
+        this.items_swiped = items_swiped;
+    }
 
     private Context ctx;
     private OnItemClickListener mOnItemClickListener;

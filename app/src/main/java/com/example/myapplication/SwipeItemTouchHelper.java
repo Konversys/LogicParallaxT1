@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-class SwipeItemTouchHelper  extends ItemTouchHelper.Callback {
+class SwipeItemTouchHelper extends ItemTouchHelper.Callback {
 
     public static final float ALPHA_FULL = 1.0f;
     private int bgColorCode = Color.GRAY;
