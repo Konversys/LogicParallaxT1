@@ -1,8 +1,8 @@
 package com.example.myapplication.model.web;
 
 import com.example.myapplication.model.models.plx_link_api.Direction;
+import com.example.myapplication.model.models.plx_link_api.Product;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -13,8 +13,11 @@ public interface ApiPlxLink {
     Call<List<Direction>> getValidDirections();
 
     @GET(WebConsts.PLX_LINK_DIRECTIONS_ALL)
-    Call<ArrayList<Direction>> getAllDirections();
+    Call<List<Direction>> getAllDirections();
 
     @GET(WebConsts.PLX_LINK_CHECKSUM)
     Call<String> getChecksum();
+
+    @GET(WebConsts.PLX_LINK_PRODUCTS)
+    Call<List<Product>> getProducts();
 }

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.model.RealmHandler;
 import com.example.myapplication.model.models.plx_link_api.Direction;
+import com.example.myapplication.model.models.plx_link_api.Product;
 import com.example.myapplication.model.models.yandex_api.direction.Segment;
 
 import com.example.myapplication.model.web.ApiInstanse;
@@ -37,11 +38,9 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         setContentView(R.layout.activity_main);
         status = findViewById(R.id.status);
-        ApiPlxLink api_link = ApiInstanse.getPlxLinkApi();
-        api_link.getValidDirections().enqueue(new Callback<List<Direction>>() {
+        ApiInstanse.getPlxLinkApi().getValidDirections().enqueue(new Callback<List<Direction>>() {
             @Override
             public void onResponse(Call<List<Direction>> call, Response<List<Direction>> response) {
-                directions = new ArrayList<>(response.body());
                 status.setText("Успешно");
                 RealmHandler.CleanSaveDirections(response.body());
                 Intent intent = new Intent(context, SelectDirection.class);
@@ -50,9 +49,19 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Direction>> call, Throwable t) {
-                status.setText("Успешно");
             }
         });
-        //status.setText("Загрузка");
+
+        ApiInstanse.getPlxLinkApi().getProducts().enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                RealmHandler.SaveProducts(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+            }
+        });
+
     }
 }
