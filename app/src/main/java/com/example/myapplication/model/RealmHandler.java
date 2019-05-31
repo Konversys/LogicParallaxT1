@@ -59,7 +59,7 @@ public class RealmHandler {
     }
 
     public static void SaveProducts(List<Product> products) {
-        AtomicInteger id = new AtomicInteger();
+        AtomicInteger id = new AtomicInteger(1);
         products.forEach(x -> x.setId(id.getAndIncrement()));
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
@@ -69,7 +69,7 @@ public class RealmHandler {
     }
 
     public static void CleanSaveProducts(List<Product> products) {
-        AtomicInteger id = new AtomicInteger();
+        AtomicInteger id = new AtomicInteger(1);
         products.forEach(x -> x.setId(id.getAndIncrement()));
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,30 +39,35 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         setContentView(R.layout.activity_main);
         status = findViewById(R.id.status);
-        ApiInstanse.getPlxLinkApi().getValidDirections().enqueue(new Callback<List<Direction>>() {
-            @Override
-            public void onResponse(Call<List<Direction>> call, Response<List<Direction>> response) {
-                status.setText("Успешно");
-                RealmHandler.CleanSaveDirections(response.body());
-                Intent intent = new Intent(context, SelectDirection.class);
-                startActivity(intent);
-            }
+        Intent intent = new Intent(context, ProductsActivity.class);
+        //if (RealmHandler.GetDirections(0).isEmpty() || RealmHandler.GetProducts().isEmpty()){
+            ApiInstanse.getPlxLinkApi().getValidDirections().enqueue(new Callback<List<Direction>>() {
+                @Override
+                public void onResponse(Call<List<Direction>> call, Response<List<Direction>> response) {
+                    status.setText("Успешно");
+                    RealmHandler.CleanSaveDirections(response.body());
+                }
 
-            @Override
-            public void onFailure(Call<List<Direction>> call, Throwable t) {
-            }
-        });
+                @Override
+                public void onFailure(Call<List<Direction>> call, Throwable t) {
+                }
+            });
 
-        ApiInstanse.getPlxLinkApi().getProducts().enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                RealmHandler.SaveProducts(response.body());
-            }
+            ApiInstanse.getPlxLinkApi().getProducts().enqueue(new Callback<List<Product>>() {
+                @Override
+                public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                    RealmHandler.CleanSaveProducts(response.body());
+                    startActivity(intent);
+                }
 
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-            }
-        });
+                @Override
+                public void onFailure(Call<List<Product>> call, Throwable t) {
 
+                }
+            });
+        //}
+        //else {
+        //    startActivity(intent);
+        //}
     }
 }

@@ -5,6 +5,7 @@ import android.media.Image;
 import com.squareup.moshi.Json;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class Product extends RealmObject {
@@ -20,6 +21,8 @@ public class Product extends RealmObject {
     String about;
     @Json(name = "price")
     double price;
+    @Ignore
+    boolean swipe;
 
     public Product() {
     }
@@ -70,5 +73,13 @@ public class Product extends RealmObject {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public boolean isSwipe() {
+        return swipe;
+    }
+
+    public void setSwipe(boolean swipe) {
+        this.swipe = swipe;
     }
 }
