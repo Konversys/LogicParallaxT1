@@ -5,6 +5,7 @@ import com.example.myapplication.model.models.plx_link_api.Direction;
 import com.example.myapplication.model.models.plx_link_api.Product;
 import com.example.myapplication.model.models.realm.Checksum;
 import com.example.myapplication.model.models.realm.Flight;
+import com.example.myapplication.model.models.realm.SellProduct;
 import com.example.myapplication.model.models.realm.Station;
 import com.example.myapplication.model.models.yandex_api.station.StationList;
 
@@ -161,7 +162,6 @@ public class RealmHandler {
     }
 
     public static Direction GetDirection(String value) {
-        ArrayList<Direction> directions;
         Realm realm = Realm.getDefaultInstance();
         Direction query = realm.where(Direction.class).equalTo("value", value).findFirst();
         Direction direction = realm.copyFromRealm(query);
@@ -187,5 +187,33 @@ public class RealmHandler {
         }
         realm.close();
         return directions;
+    }
+
+    public static ArrayList<SellProduct> GetSellProducts(){
+        ArrayList<SellProduct> sellProducts;
+        Realm realm = Realm.getDefaultInstance();
+        sellProducts = new ArrayList<>(realm.copyFromRealm(realm.where(SellProduct.class).findAll()));
+        realm.close();
+        return sellProducts;
+    }
+
+    public static SellProduct GetSellProductByID(int id){
+        SellProduct sellProduct;
+        Realm realm = Realm.getDefaultInstance();
+        sellProduct = realm.where(SellProduct.class).equalTo("id", id).findFirst();
+        realm.close();
+        return sellProduct;
+    }
+
+    public static void UpdateSellProduct(SellProduct sellProduct){
+        Realm realm = Realm.getDefaultInstance();
+        realm.insertOrUpdate(sellProduct);
+        realm.close();
+    }
+
+    public static void SaveProduct(SellProduct sellProduct){
+        Realm realm = Realm.getDefaultInstance();
+        realm.insert(sellProduct);
+        realm.close();
     }
 }

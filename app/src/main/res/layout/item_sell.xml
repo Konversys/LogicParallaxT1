@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:id="@+id/ItemSellLyt"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="#"
+        android:id="@+id/ItemSellTitleNumber"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/ItemSellNumber"
+        app:layout_constraintLeft_toRightOf="@id/ItemSellTitleNumber"
+        app:layout_constraintBaseline_toBaselineOf="@id/ItemSellTitleNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/ItemSellTitle"
+        app:layout_constraintLeft_toRightOf="@id/ItemSellNumber"
+        app:layout_constraintBaseline_toBaselineOf="@id/ItemSellTitleNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="Цена: "
+        android:id="@+id/ItemSellTitlePrice"
+        app:layout_constraintBaseline_toBaselineOf="@id/ItemSellTitle"
+        app:layout_constraintRight_toLeftOf="@id/ItemSellPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/ItemSellPrice"
+        app:layout_constraintBaseline_toBaselineOf="@id/ItemSellTitle"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/ItemSellCount"
+        app:layout_constraintTop_toBottomOf="@id/ItemSellTitleNumber"
+        app:layout_constraintLeft_toLeftOf="@id/ItemSellTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/ItemSellAbout"
+        app:layout_constraintTop_toBottomOf="@id/ItemSellCount"
+        app:layout_constraintLeft_toLeftOf="@id/ItemSellTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/ItemSellSelled"
+        app:layout_constraintTop_toBottomOf="@id/ItemSellPrice"
+        app:layout_constraintRight_toRightOf="@id/ItemSellPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</androidx.constraintlayout.widget.ConstraintLayout>

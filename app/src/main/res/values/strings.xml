@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Parallax</string>
     <string name="rasp">Расписание </string>
+    <string name="title_activity_sell">Sell</string>
 </resources>

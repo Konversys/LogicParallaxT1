@@ -21,11 +21,7 @@ public class AdapterProducts extends RecyclerView.Adapter<RecyclerView.ViewHolde
         implements SwipeItemTouchHelper.SwipeHelperAdapter {
 
     private ArrayList<Product> items = new ArrayList<>();
-    public ArrayList<Product> items_swiped = new ArrayList<>();
-
-    public void setItems_swiped(ArrayList<Product> items_swiped) {
-        this.items_swiped = items_swiped;
-    }
+    private ArrayList<Product> items_swiped = new ArrayList<>();
 
     private Context ctx;
     private OnItemClickListener mOnItemClickListener;
@@ -52,7 +48,6 @@ public class AdapterProducts extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public TextView about;
         public ImageView image;
 
-        //public ImageButton bt_move;
         public Button bt_undo;
         public View lyt_parent;
 
@@ -65,7 +60,6 @@ public class AdapterProducts extends RecyclerView.Adapter<RecyclerView.ViewHolde
             category = (TextView) v.findViewById(R.id.ItemProductCategory);
             count = (TextView) v.findViewById(R.id.ItemProductCount);
             about = (TextView) v.findViewById(R.id.ItemProductAbout);
-            //bt_move = (ImageButton) v.findViewById(R.id.bt_move);
             bt_undo = (Button) v.findViewById(R.id.bt_undo);
             lyt_parent = (View) v.findViewById(R.id.ItemProductLytParent);
         }

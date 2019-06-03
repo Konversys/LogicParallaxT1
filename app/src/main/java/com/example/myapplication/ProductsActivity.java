@@ -6,19 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.AutoCompleteTextView;
-import android.widget.SearchView;
 
-import com.example.myapplication.model.AdapterProductsRV;
 import com.example.myapplication.model.RealmHandler;
 import com.example.myapplication.model.models.plx_link_api.Product;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import io.realm.Realm;
 
 public class ProductsActivity extends AppCompatActivity {
 
@@ -49,7 +42,6 @@ public class ProductsActivity extends AppCompatActivity {
         ItemTouchHelper.Callback callback = new SwipeItemTouchHelper(mAdapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(productsView);
-        productSearch.setAdapter(new AdapterProductsRV(mAdapter));
     }
 
     private void initAutocompete() {
