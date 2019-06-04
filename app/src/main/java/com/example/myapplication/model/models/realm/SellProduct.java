@@ -16,6 +16,27 @@ public class SellProduct extends RealmObject {
     int total;
     int sold;
 
+    public SellProduct(Product product, int total, int sold) {
+        this.title = product.getTitle();
+        this.category = product.getCategory();
+        this.count = product.getCount();
+        this.about = product.getAbout();
+        this.price = product.getPrice();
+        this.total = total;
+        this.sold = sold;
+    }
+
+    public SellProduct(int id, Product product, int total, int sold) {
+        this.id = id;
+        this.title = product.getTitle();
+        this.category = product.getCategory();
+        this.count = product.getCount();
+        this.about = product.getAbout();
+        this.price = product.getPrice();
+        this.total = total;
+        this.sold = sold;
+    }
+
     public SellProduct(int id, String title, String category, String count, String about, double price, int total, int sold) {
         this.id = id;
         this.title = title;

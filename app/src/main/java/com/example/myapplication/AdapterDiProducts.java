@@ -4,11 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,11 +13,9 @@ import com.example.myapplication.model.models.plx_link_api.Product;
 
 import java.util.ArrayList;
 
-public class AdapterProducts extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-        implements SwipeItemTouchHelper.SwipeHelperAdapter {
+public class AdapterDiProducts extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<Product> items = new ArrayList<>();
-    private ArrayList<Product> items_swiped = new ArrayList<>();
+    private ArrayList<Product> items;
 
     private Context ctx;
     private OnItemClickListener mOnItemClickListener;
@@ -34,12 +28,12 @@ public class AdapterProducts extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.mOnItemClickListener = mItemClickListener;
     }
 
-    public AdapterProducts(Context context, ArrayList<Product> items) {
+    public AdapterDiProducts(Context context, ArrayList<Product> items) {
         this.items = items;
         ctx = context;
     }
 
-    public class OriginalViewHolder extends RecyclerView.ViewHolder implements SwipeItemTouchHelper.TouchViewHolder {
+    public class OriginalViewHolder extends RecyclerView.ViewHolder {
         public TextView number;
         public TextView title;
         public TextView price;
@@ -48,7 +42,6 @@ public class AdapterProducts extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public TextView about;
         public ImageView image;
 
-        public Button bt_undo;
         public View lyt_parent;
 
         public OriginalViewHolder(View v) {
@@ -60,18 +53,7 @@ public class AdapterProducts extends RecyclerView.Adapter<RecyclerView.ViewHolde
             category = (TextView) v.findViewById(R.id.ItemProductCategory);
             count = (TextView) v.findViewById(R.id.ItemProductCount);
             about = (TextView) v.findViewById(R.id.ItemProductAbout);
-            bt_undo = (Button) v.findViewById(R.id.bt_undo);
             lyt_parent = (View) v.findViewById(R.id.ItemProductLytParent);
-        }
-
-        @Override
-        public void onItemSelected() {
-            itemView.setBackgroundColor(ctx.getResources().getColor(R.color.grey_5));
-        }
-
-        @Override
-        public void onItemClear() {
-            itemView.setBackgroundColor(0);
         }
     }
 
@@ -113,7 +95,6 @@ public class AdapterProducts extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             view.price.setText(String.valueOf(product.getPrice()));
 
-            //Tools.displayImageOriginal(ctx, view.image, p.image);
             view.lyt_parent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -122,60 +103,11 @@ public class AdapterProducts extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 }
             });
-
-            view.bt_undo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    items.get(position).setSwipe(false);
-                    items_swiped.remove(items.get(position));
-                    notifyItemChanged(position);
-                }
-            });
-
-            if (product.isSwipe()) {
-                view.lyt_parent.setVisibility(View.GONE);
-            } else {
-                view.lyt_parent.setVisibility(View.VISIBLE);
-            }
         }
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                for (Product s : items_swiped) {
-                    int index_removed = items.indexOf(s);
-                    if (index_removed != -1) {
-                        items.remove(index_removed);
-                        notifyItemRemoved(index_removed);
-                    }
-                }
-                items_swiped.clear();
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
-        super.onAttachedToRecyclerView(recyclerView);
     }
 
     @Override
     public int getItemCount() {
         return items.size();
-    }
-
-    @Override
-    public void onItemDismiss(int position) {
-        // handle when double swipe
-        if (items.get(position).isSwipe()) {
-            items_swiped.remove(items.get(position));
-            items.remove(position);
-            notifyItemRemoved(position);
-        return;
-        }
-
-        items.get(position).setSwipe(true);
-        items_swiped.add(items.get(position));
-        notifyItemChanged(position);
     }
 }

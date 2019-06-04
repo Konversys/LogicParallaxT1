@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <ImageButton
+        android:id="@+id/DiAddProductClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:tint="@color/overlay_dark_90"
+        android:background="@color/mdtp_white"
+        android:src="@drawable/ic_close"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/DiAddProductProducts"
+        android:layout_width="match_parent"
+        android:layout_height="400dp" />
+
+    <LinearLayout
+        android:id="@+id/DiAddProductTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingRight="5dp"
+            android:text="Количество" />
+
+        <NumberPicker
+            android:id="@+id/DiAddProductNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:width="80dp" />
+    </LinearLayout>
+
+</LinearLayout>

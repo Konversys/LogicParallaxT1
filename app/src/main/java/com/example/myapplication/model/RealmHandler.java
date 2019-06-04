@@ -1,5 +1,6 @@
 package com.example.myapplication.model;
 
+import com.example.myapplication.SellActivity;
 import com.example.myapplication.model.logic.YandexApiDataConverter;
 import com.example.myapplication.model.models.plx_link_api.Direction;
 import com.example.myapplication.model.models.plx_link_api.Product;
@@ -15,6 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 public class RealmHandler {
     public static void SaveDirections(List<Direction> directions) {
@@ -205,15 +207,65 @@ public class RealmHandler {
         return sellProduct;
     }
 
+    public static boolean IsProductEqualToSellProduct(Product product){
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<SellProduct> results = realm.where(SellProduct.class)
+                .equalTo("title", product.getTitle()).and()
+                .equalTo("price", product.getPrice()).and()
+                .equalTo("about", product.getAbout()).findAll();
+        if (results.isEmpty()) {
+            realm.close();
+            return false;
+        }
+        else {
+            realm.close();
+            return true;
+        }
+    }
+
+    public static double SumSoldSellProducts(){
+        double sum = 0;
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<SellProduct> results = realm.where(SellProduct.class).findAll();
+        for (SellProduct item: results) {
+            sum += item.getPrice()*item.getSold();
+        }
+        realm.close();
+        return sum;
+    }
+
+    public static double SumTotalSellProducts(){
+        double sum = 0;
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<SellProduct> results = realm.where(SellProduct.class).findAll();
+        for (SellProduct item: results) {
+            sum += item.getPrice()*item.getTotal();
+        }
+        realm.close();
+        return sum;
+    }
+
     public static void UpdateSellProduct(SellProduct sellProduct){
         Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
         realm.insertOrUpdate(sellProduct);
+        realm.commitTransaction();
         realm.close();
     }
 
-    public static void SaveProduct(SellProduct sellProduct){
+    public static void AddSellProduct(SellProduct sellProduct){
         Realm realm = Realm.getDefaultInstance();
+        Number currentIdNum = realm.where(SellProduct.class).max("id");
+        int nextId;
+        if(currentIdNum == null) {
+            nextId = 1;
+        } else {
+            nextId = currentIdNum.intValue() + 1;
+        }
+        sellProduct.setId(nextId);
+        realm.beginTransaction();
         realm.insert(sellProduct);
+        realm.commitTransaction();
         realm.close();
     }
 }

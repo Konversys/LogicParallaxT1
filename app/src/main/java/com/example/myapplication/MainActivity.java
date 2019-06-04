@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         setContentView(R.layout.activity_main);
         status = findViewById(R.id.status);
-        Intent intent = new Intent(context, ProductsActivity.class);
-        //if (RealmHandler.GetDirections(0).isEmpty() || RealmHandler.GetProducts().isEmpty()){
+        Intent intent = new Intent(context, SellActivity.class);
+        if (RealmHandler.GetDirections(0).isEmpty() || RealmHandler.GetProducts().isEmpty()){
             ApiInstanse.getPlxLinkApi().getValidDirections().enqueue(new Callback<List<Direction>>() {
                 @Override
                 public void onResponse(Call<List<Direction>> call, Response<List<Direction>> response) {
@@ -65,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-        //}
-        //else {
-        //    startActivity(intent);
-        //}
+        }
+        else {
+            startActivity(intent);
+        }
     }
 }

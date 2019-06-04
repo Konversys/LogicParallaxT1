@@ -43,8 +43,4 @@ public class ProductsActivity extends AppCompatActivity {
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(productsView);
     }
-
-    private void initAutocompete() {
-
-    }
 }

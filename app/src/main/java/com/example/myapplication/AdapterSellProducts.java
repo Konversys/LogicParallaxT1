@@ -1,14 +1,21 @@
 package com.example.myapplication;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.model.RealmHandler;
 import com.example.myapplication.model.models.realm.SellProduct;
 
 import java.util.ArrayList;
@@ -17,6 +24,10 @@ import java.util.List;
 public class AdapterSellProducts extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<SellProduct> items = new ArrayList<>();
+
+    public void ResetItems() {
+        this.items = RealmHandler.GetSellProducts();
+    }
 
     private Context ctx;
     private OnItemClickListener mOnItemClickListener;
@@ -36,6 +47,7 @@ public class AdapterSellProducts extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public class OriginalViewHolder extends RecyclerView.ViewHolder {
         public TextView number;
+        public TextView title;
         public TextView price;
         public TextView count;
         public TextView about;
@@ -45,6 +57,7 @@ public class AdapterSellProducts extends RecyclerView.Adapter<RecyclerView.ViewH
         public OriginalViewHolder(View v) {
             super(v);
             number = (TextView) v.findViewById(R.id.ItemSellNumber);
+            title = (TextView) v.findViewById(R.id.ItemSellTitle);
             price = (TextView) v.findViewById(R.id.ItemSellPrice);
             count = (TextView) v.findViewById(R.id.ItemSellCount);
             about = (TextView) v.findViewById(R.id.ItemSellAbout);
@@ -68,11 +81,11 @@ public class AdapterSellProducts extends RecyclerView.Adapter<RecyclerView.ViewH
             OriginalViewHolder view = (OriginalViewHolder) holder;
 
             SellProduct item = items.get(position);
-            view.number.setText(item.getId());
+            view.number.setText(String.valueOf(item.getId()));
+            view.title.setText(item.getTitle());
             view.price.setText(String.valueOf(item.getPrice()));
             view.about.setText(item.getAbout());
             view.count.setText(item.getCount());
-            view.selled.setText(item.getSold());
             view.selled.setText("Продано " + item.getSold() + " из " + item.getTotal());
             view.lyt_parent.setOnClickListener(new View.OnClickListener() {
                 @Override

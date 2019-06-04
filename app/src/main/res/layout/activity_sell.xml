@@ -10,10 +10,11 @@
         android:id="@+id/AcSellFrInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="5dp"
         android:paddingHorizontal="15dp"
+        android:paddingVertical="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/AcSellTitleTotal"
             android:layout_width="wrap_content"
@@ -31,9 +32,9 @@
 
         <TextView
             android:id="@+id/AcSellTitleTotalSelled"
-            android:layout_marginTop="1dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
             android:text="Проданно на сумму: "
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/AcSellTitleTotal" />
@@ -46,31 +47,30 @@
             app:layout_constraintLeft_toRightOf="@id/AcSellTitleTotalSelled" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/AcSellProducts"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/AcSellFrInfo"
-        app:layout_constraintLeft_toLeftOf="parent">
+        android:layout_height="500dp"
+        android:scrollbars="vertical"
+        android:scrollingCache="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/AcSellFrInfo" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/AcSellProducts"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:scrollingCache="true" />
-    </LinearLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/AcSellFab"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:clickable="true"
-        android:tint="@android:color/white"
-        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:rippleColor="@android:color/white"
-        app:srcCompat="@drawable/ic_add" />
+        app:layout_constraintRight_toRightOf="parent">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/AcSellFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:backgroundTint="@color/red_500"
+            app:fabSize="normal"
+            app:rippleColor="@color/mdtp_white"
+            app:srcCompat="@drawable/ic_add" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
