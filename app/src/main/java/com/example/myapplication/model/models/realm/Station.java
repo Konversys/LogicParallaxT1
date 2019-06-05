@@ -1,5 +1,6 @@
 package com.example.myapplication.model.models.realm;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import io.realm.RealmObject;
@@ -128,5 +129,57 @@ public class Station extends RealmObject {
 
     public void setRatio(int ratio) {
         this.ratio = ratio;
+    }
+
+    public static CurrentStation getCurrentStation(ArrayList<Station> stations) {
+        int left = 0;
+        int right = stations.size() - 1;
+        int mid;
+        Date now = new Date();
+        if (stations.get(0).getDeparture().after(now)) {
+            mid = 0;
+            return new CurrentStation(mid, CurrentPosition.BEFORE_START);
+        } else if (stations.get(stations.size() - 1).getArrival().before(now)) {
+            mid = stations.size() - 1;
+            return new CurrentStation(mid, CurrentPosition.AFTER_END);
+        } else {
+            while (!(left >= right)) {
+                mid = left + (right - left) / 2;
+
+                if (stations.get(mid).getArrival() != null &&
+                        stations.get(mid).getDeparture() != null &&
+                        stations.get(mid).getArrival().before(now) &&
+                        stations.get(mid).getDeparture().after(now)) {
+                    return new CurrentStation(mid, CurrentPosition.STAY);
+                } else if (stations.get(mid).getDeparture() != null &&
+                        stations.get(mid + 1).getArrival() != null &&
+                        stations.get(mid).getDeparture().before(now) &&
+                        stations.get(mid + 1).getArrival().after(now)) {
+                    return new CurrentStation(mid, CurrentPosition.BETWEEN_STATIONS);
+                }
+                if (stations.get(mid).getArrival().after(now))
+                    right = mid;
+                else
+                    left = mid + 1;
+            }
+            return null;
+        }
+    }
+
+    public static ArrayList<Station> RefreshStationsRatio(ArrayList<Station> stations) {
+        CurrentStation currentPosition = getCurrentStation(stations);
+        int id = currentPosition.getStation();
+        switch (currentPosition.getStation()) {
+            case CurrentPosition.BETWEEN_STATIONS:
+                stations.stream().filter(x -> x.getId() < id).forEach(x -> x.setRatio(StationRatio.BEHIND));
+                stations.stream().filter(x -> x.getId() >= id).forEach(x -> x.setRatio(StationRatio.ARRIVAL));
+                break;
+            default:
+                stations.stream().filter(x -> x.getId() < id).forEach(x -> x.setRatio(StationRatio.BEHIND));
+                stations.stream().filter(x -> x.getId() > id).forEach(x -> x.setRatio(StationRatio.ARRIVAL));
+                stations.stream().filter(x -> x.getId() == id).forEach(x -> x.setRatio(StationRatio.STAY));
+                break;
+        }
+        return stations;
     }
 }

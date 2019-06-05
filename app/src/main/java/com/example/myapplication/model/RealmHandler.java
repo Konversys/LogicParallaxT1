@@ -5,13 +5,17 @@ import com.example.myapplication.model.logic.YandexApiDataConverter;
 import com.example.myapplication.model.models.plx_link_api.Direction;
 import com.example.myapplication.model.models.plx_link_api.Product;
 import com.example.myapplication.model.models.realm.Checksum;
+import com.example.myapplication.model.models.realm.Coupe;
 import com.example.myapplication.model.models.realm.Flight;
+import com.example.myapplication.model.models.realm.Place;
 import com.example.myapplication.model.models.realm.SellProduct;
 import com.example.myapplication.model.models.realm.Station;
+import com.example.myapplication.model.models.realm.Wagon;
 import com.example.myapplication.model.models.yandex_api.station.StationList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import io.realm.Realm;
@@ -191,7 +195,7 @@ public class RealmHandler {
         return directions;
     }
 
-    public static ArrayList<SellProduct> GetSellProducts(){
+    public static ArrayList<SellProduct> GetSellProducts() {
         ArrayList<SellProduct> sellProducts;
         Realm realm = Realm.getDefaultInstance();
         sellProducts = new ArrayList<>(realm.copyFromRealm(realm.where(SellProduct.class).findAll()));
@@ -199,7 +203,7 @@ public class RealmHandler {
         return sellProducts;
     }
 
-    public static SellProduct GetSellProductByID(int id){
+    public static SellProduct GetSellProductByID(int id) {
         SellProduct sellProduct;
         Realm realm = Realm.getDefaultInstance();
         sellProduct = realm.where(SellProduct.class).equalTo("id", id).findFirst();
@@ -207,7 +211,7 @@ public class RealmHandler {
         return sellProduct;
     }
 
-    public static boolean IsProductEqualToSellProduct(Product product){
+    public static boolean IsProductEqualToSellProduct(Product product) {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<SellProduct> results = realm.where(SellProduct.class)
                 .equalTo("title", product.getTitle()).and()
@@ -216,36 +220,35 @@ public class RealmHandler {
         if (results.isEmpty()) {
             realm.close();
             return false;
-        }
-        else {
+        } else {
             realm.close();
             return true;
         }
     }
 
-    public static double SumSoldSellProducts(){
+    public static double SumSoldSellProducts() {
         double sum = 0;
         Realm realm = Realm.getDefaultInstance();
         RealmResults<SellProduct> results = realm.where(SellProduct.class).findAll();
-        for (SellProduct item: results) {
-            sum += item.getPrice()*item.getSold();
+        for (SellProduct item : results) {
+            sum += item.getPrice() * item.getSold();
         }
         realm.close();
         return sum;
     }
 
-    public static double SumTotalSellProducts(){
+    public static double SumTotalSellProducts() {
         double sum = 0;
         Realm realm = Realm.getDefaultInstance();
         RealmResults<SellProduct> results = realm.where(SellProduct.class).findAll();
-        for (SellProduct item: results) {
-            sum += item.getPrice()*item.getTotal();
+        for (SellProduct item : results) {
+            sum += item.getPrice() * item.getTotal();
         }
         realm.close();
         return sum;
     }
 
-    public static void UpdateSellProduct(SellProduct sellProduct){
+    public static void UpdateSellProduct(SellProduct sellProduct) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.insertOrUpdate(sellProduct);
@@ -253,11 +256,11 @@ public class RealmHandler {
         realm.close();
     }
 
-    public static void AddSellProduct(SellProduct sellProduct){
+    public static void AddSellProduct(SellProduct sellProduct) {
         Realm realm = Realm.getDefaultInstance();
         Number currentIdNum = realm.where(SellProduct.class).max("id");
         int nextId;
-        if(currentIdNum == null) {
+        if (currentIdNum == null) {
             nextId = 1;
         } else {
             nextId = currentIdNum.intValue() + 1;
@@ -267,5 +270,52 @@ public class RealmHandler {
         realm.insert(sellProduct);
         realm.commitTransaction();
         realm.close();
+    }
+
+    public static void CleanSetWagon(int countCoupe, int number, int factoryNumber) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.where(Place.class).findAll().deleteAllFromRealm();
+                realm.where(Coupe.class).findAll().deleteAllFromRealm();
+                realm.where(Wagon.class).findAll().deleteAllFromRealm();
+                Wagon wagon = realm.createObject(Wagon.class, UUID.randomUUID().toString());
+                wagon.setNumber(number);
+                wagon.setFactory(factoryNumber);
+                for (int i = 0; i < countCoupe; i++) {
+                    Coupe coupe = realm.createObject(Coupe.class, UUID.randomUUID().toString());
+                    coupe.setNumber(i + 1);
+
+                    Place placeLT = realm.createObject(Place.class, UUID.randomUUID().toString());
+                    Place placeLB = realm.createObject(Place.class, UUID.randomUUID().toString());
+                    Place placeRT = realm.createObject(Place.class, UUID.randomUUID().toString());
+                    Place placeRB = realm.createObject(Place.class, UUID.randomUUID().toString());
+
+                    placeLT.setNumber(i * 4 + 1);
+                    placeLB.setNumber(i * 4 + 2);
+                    placeRT.setNumber(i * 4 + 3);
+                    placeRB.setNumber(i * 4 + 4);
+
+                    placeLT.setTaken(false);
+                    placeLB.setTaken(false);
+                    placeRT.setTaken(false);
+                    placeRB.setTaken(false);
+
+                    coupe.setPlaceLT(placeLT);
+                    coupe.setPlaceLB(placeLB);
+                    coupe.setPlaceRT(placeRT);
+                    coupe.setPlaceRB(placeRB);
+                    wagon.addCoupes(coupe);
+                }
+            }
+        });
+    }
+
+    public static Wagon GetWagon() {
+        Realm realm = Realm.getDefaultInstance();
+        Wagon wagon = realm.copyFromRealm(realm.where(Wagon.class).findFirst());
+        realm.close();
+        return wagon;
     }
 }
