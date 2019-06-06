@@ -147,6 +147,38 @@ public class RealmHandler {
         return stations;
     }
 
+    public static ArrayList<Station> GetStationsByName(String search) {
+        return GetStationsByName(search, 0);
+    }
+
+    public static ArrayList<Station> GetStationsByName(String search, Integer count) {
+        ArrayList<Station> stations;
+        String[] values = search.split(" ");
+        Realm realm = Realm.getDefaultInstance();
+        RealmQuery<Station> query = realm.where(Station.class);
+        for (String line : values) {
+            query = query.contains("title", line).and();
+        }
+        if (count <= 0) {
+            stations = new ArrayList<>(realm.copyFromRealm(query.findAll()));
+        } else {
+            stations = new ArrayList<>(realm.copyFromRealm(query.findAll()));
+            if (stations.size() > count) {
+                stations = new ArrayList<>(stations.subList(0, count));
+            }
+        }
+        realm.close();
+        return stations;
+    }
+
+    public static Station GetStationsByID(int id) {
+        Station station;
+        Realm realm = Realm.getDefaultInstance();
+        station = realm.copyFromRealm(realm.where(Station.class).equalTo("id", id).findFirst());
+        realm.close();
+        return station;
+    }
+
     public static void SaveFlight(Flight flight, StationList stationList) {
         Realm realm = Realm.getDefaultInstance();
         try {
@@ -297,11 +329,6 @@ public class RealmHandler {
                     placeRT.setNumber(i * 4 + 3);
                     placeRB.setNumber(i * 4 + 4);
 
-                    placeLT.setTaken(false);
-                    placeLB.setTaken(false);
-                    placeRT.setTaken(false);
-                    placeRB.setTaken(false);
-
                     coupe.setPlaceLT(placeLT);
                     coupe.setPlaceLB(placeLB);
                     coupe.setPlaceRT(placeRT);
@@ -314,8 +341,24 @@ public class RealmHandler {
 
     public static Wagon GetWagon() {
         Realm realm = Realm.getDefaultInstance();
-        Wagon wagon = realm.copyFromRealm(realm.where(Wagon.class).findFirst());
+        Wagon wagon;
+        try {
+            wagon = realm.copyFromRealm(realm.where(Wagon.class).findFirst());
+        } catch (Exception e) {
+            realm.close();
+            return null;
+        }
         realm.close();
         return wagon;
+    }
+
+    public static void SetPlace(Place place){
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(place);
+            }
+        });
     }
 }

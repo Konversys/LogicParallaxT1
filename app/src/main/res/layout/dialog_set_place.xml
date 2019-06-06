@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <AutoCompleteTextView
+        android:id="@+id/DiSetPlaceFrom"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:background="@android:color/transparent"
+        android:hint="Станция отправления"
+        android:imeOptions="actionSearch"
+        android:completionThreshold="0"
+        android:maxLines="1"
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:singleLine="true" />
+
+    <AutoCompleteTextView
+        android:id="@+id/DiSetPlaceTo"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:background="@android:color/transparent"
+        android:hint="Станция прибытия"
+        android:imeOptions="actionSearch"
+        android:completionThreshold="0"
+        android:maxLines="1"
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:singleLine="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/DiSetPlaceLinen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Постельное белье" />
+
+        <CheckBox
+            android:id="@+id/DiSetPlaceChildren"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C детьми" />
+
+        <CheckBox
+            android:id="@+id/DiSetPlaceAnimal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C животными" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/DiSetPlaceCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="15dp"
+            android:text="Отменить" />
+
+        <Button
+            android:id="@+id/DiSetPlaceRemove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="15dp"
+            android:text="Высадить" />
+
+        <Button
+            android:id="@+id/DiSetPlaceSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="15dp"
+            android:text="Добавить" />
+    </LinearLayout>
+</LinearLayout>

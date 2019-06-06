@@ -10,12 +10,21 @@ public class Place extends RealmObject {
     @PrimaryKey
     String id;
     int number;
-    boolean taken;
     Station from;
     Station to;
-    int animalCount;
-    int childrenCount;
+    boolean withLinen;
+    boolean withAnimal;
+    boolean withChildren;
     RealmList<Inventory> inventories;
+
+    public void clean() {
+        from = null;
+        to = null;
+        withLinen = false;
+        withAnimal = false;
+        withChildren = false;
+        inventories.clear();
+    }
 
     public Place() {
     }
@@ -37,11 +46,11 @@ public class Place extends RealmObject {
     }
 
     public boolean isTaken() {
-        return taken;
-    }
-
-    public void setTaken(boolean taken) {
-        this.taken = taken;
+        if (from != null && to != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Station getFrom() {
@@ -60,20 +69,28 @@ public class Place extends RealmObject {
         this.to = to;
     }
 
-    public int getAnimalCount() {
-        return animalCount;
+    public boolean isWithLinen() {
+        return withLinen;
     }
 
-    public void setAnimalCount(int animalCount) {
-        this.animalCount = animalCount;
+    public void setWithLinen(boolean withLinen) {
+        this.withLinen = withLinen;
     }
 
-    public int getChildrenCount() {
-        return childrenCount;
+    public boolean isWithAnimal() {
+        return withAnimal;
     }
 
-    public void setChildrenCount(int childrenCount) {
-        this.childrenCount = childrenCount;
+    public void setWithAnimal(boolean withAnimal) {
+        this.withAnimal = withAnimal;
+    }
+
+    public boolean isWithChildren() {
+        return withChildren;
+    }
+
+    public void setWithChildren(boolean withChildren) {
+        this.withChildren = withChildren;
     }
 
     public RealmList<Inventory> getInventories() {

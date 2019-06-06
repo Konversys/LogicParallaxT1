@@ -1,5 +1,7 @@
 package com.example.myapplication.model.models.realm;
 
+import com.example.myapplication.model.RealmHandler;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -145,7 +147,6 @@ public class Station extends RealmObject {
         } else {
             while (!(left >= right)) {
                 mid = left + (right - left) / 2;
-
                 if (stations.get(mid).getArrival() != null &&
                         stations.get(mid).getDeparture() != null &&
                         stations.get(mid).getArrival().before(now) &&
@@ -164,6 +165,10 @@ public class Station extends RealmObject {
             }
             return null;
         }
+    }
+
+    public static CurrentStation getCurrentStation() {
+        return getCurrentStation(RealmHandler.GetStations());
     }
 
     public static ArrayList<Station> RefreshStationsRatio(ArrayList<Station> stations) {

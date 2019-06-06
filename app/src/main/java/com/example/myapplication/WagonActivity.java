@@ -31,12 +31,11 @@ public class WagonActivity extends AppCompatActivity {
         coupesView.setLayoutManager(new LinearLayoutManager(this));
         coupesView.setHasFixedSize(true);
 
-        //if (RealmHandler.GetWagon() == null)
+        if (RealmHandler.GetWagon() == null)
             RealmHandler.CleanSetWagon(9, 6, 51064);
         Wagon wagon = RealmHandler.GetWagon();
-        List<Coupe> coupeList = new ArrayList<>(RealmHandler.GetWagon().getCoupes());
 
-        adapterWagonCoupe = new AdapterWagonCoupe(this, coupeList);
+        adapterWagonCoupe = new AdapterWagonCoupe(this);
         coupesView.setAdapter(adapterWagonCoupe);
     }
 }

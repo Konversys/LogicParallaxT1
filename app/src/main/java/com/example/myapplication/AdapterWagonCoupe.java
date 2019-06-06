@@ -1,17 +1,22 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.model.RealmHandler;
 import com.example.myapplication.model.models.realm.Coupe;
+import com.example.myapplication.model.models.realm.CurrentStation;
 import com.example.myapplication.model.models.realm.Place;
+import com.example.myapplication.model.models.realm.Station;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +42,8 @@ public class AdapterWagonCoupe extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.mOnItemClickListener = mItemClickListener;
     }
 
-    public AdapterWagonCoupe(Context context, List<Coupe> coupes) {
-        this.items = coupes;
+    public AdapterWagonCoupe(Context context) {
+        ResetItems();
         ctx = context;
     }
 
@@ -74,28 +79,71 @@ public class AdapterWagonCoupe extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof AdapterWagonCoupe.OriginalViewHolder) {
             AdapterWagonCoupe.OriginalViewHolder view = (AdapterWagonCoupe.OriginalViewHolder) holder;
-
+            PlaceDialog placeDialog = new PlaceDialog(ctx, this);
+            Station station = RealmHandler.GetStationsByID(Station.getCurrentStation().getStation()+1);
+            int stationId = station.getId();
+            boolean isEnd = false;
+            if (station == null){
+                isEnd = true;
+            }
             Coupe item = items.get(position);
             view.coupe.setText(String.valueOf(item.getNumber()));
-            if (item.getPlaceLB().isTaken())
-                view.lb.setText(item.getPlaceLB().getTo().getTitle());
-            else
+            if (item.getPlaceLB().isTaken()) {
+                if (item.getPlaceLB().getTo().getId() == stationId){
+                    view.lb.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                }
+                else {
+                    view.lb.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+                }
+                view.lb.setText(item.getPlaceLB().getNumber() + " " + item.getPlaceLB().getTo().getTitle());
+            } else {
+                view.lb.setBackgroundResource(R.color.amber_50);
                 view.lb.setText(String.valueOf(item.getPlaceLB().getNumber()));
+            }
 
-            if (item.getPlaceRB().isTaken())
-                view.rb.setText(item.getPlaceRB().getTo().getTitle());
-            else
+            if (item.getPlaceRB().isTaken()) {
+                if (item.getPlaceRB().getTo().getId() == stationId){
+                    view.rb.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                }
+                else {
+                    view.rb.setBackgroundResource(R.color.amber_50);
+                }
+                view.rb.setText(item.getPlaceRB().getNumber() + " " + item.getPlaceRB().getTo().getTitle());
+            } else {
                 view.rb.setText(String.valueOf(item.getPlaceRB().getNumber()));
+                view.rb.setBackgroundResource(R.color.amber_50);
+            }
 
-            if (item.getPlaceLT().isTaken())
-                view.lt.setText(item.getPlaceLT().getTo().getTitle());
-            else
+            if (item.getPlaceLT().isTaken()) {
+                if (item.getPlaceLT().getTo().getId() == stationId){
+                    view.lt.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                }
+                else {
+                    view.lt.setBackgroundResource(R.color.amber_50);
+                }
+                view.lt.setText(item.getPlaceLT().getNumber() + " " + item.getPlaceLT().getTo().getTitle());
+            } else {
+                view.lt.setBackgroundResource(R.color.amber_50);
                 view.lt.setText(String.valueOf(item.getPlaceLT().getNumber()));
+            }
 
-            if (item.getPlaceRB().isTaken())
-                view.rt.setText(item.getPlaceRT().getTo().getTitle());
-            else
+            if (item.getPlaceRT().isTaken()) {
+                int placeStationId = item.getPlaceRT().getTo().getId();
+                if (placeStationId == stationId){
+                    // След станция
+                    view.rt.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                }
+                else if(placeStationId > stationId) {
+                    // Проехал
+                    view.rt.setBackgroundResource(R.color.amber_50);
+                } else {
+                    // Красивчик
+                }
+                view.rt.setText(item.getPlaceRT().getNumber() + " " + item.getPlaceRT().getTo().getTitle());
+            } else {
+                view.rt.setBackgroundResource(R.color.amber_50);
                 view.rt.setText(String.valueOf(item.getPlaceRT().getNumber()));
+            }
 
             view.lyt_parent.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -103,6 +151,31 @@ public class AdapterWagonCoupe extends RecyclerView.Adapter<RecyclerView.ViewHol
                     if (mOnItemClickListener != null) {
                         mOnItemClickListener.onItemClick(view, items.get(position), position);
                     }
+                }
+            });
+
+            view.lb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    placeDialog.showDialog(item.getPlaceLB());
+                }
+            });
+            view.lt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    placeDialog.showDialog(item.getPlaceLT());
+                }
+            });
+            view.rb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    placeDialog.showDialog(item.getPlaceRB());
+                }
+            });
+            view.rt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    placeDialog.showDialog(item.getPlaceRT());
                 }
             });
         }
